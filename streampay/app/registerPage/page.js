@@ -52,7 +52,7 @@ const RegisterPage = () => {
 
     return (
       <div className="w-full min-h-screen flex justify-center items-center bg-white flex-col">
-        <h1 className="text-5xl font-bold text-green-500 mb-9 display-block">CRAVE HUB</h1>
+        <h1 className="text-5xl font-bold text-green-500 mb-9 display-block uppercase">Stream pay</h1>
         
         
   
