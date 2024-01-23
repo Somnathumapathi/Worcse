@@ -1,9 +1,9 @@
 class SupplyProvider {
-    constructor( supplyProviderId, supplyProviderName, supplyProviderEmail, projectId ) {
+    constructor( supplyProviderId, supplyProviderName, supplyProviderEmail ) {
         this.supplyProviderId = supplyProviderId
         this.supplyProviderName = supplyProviderName
         this.supplyProviderEmail = supplyProviderEmail
-        this.projectId = projectId
+
     }
 }
 export default SupplyProvider
