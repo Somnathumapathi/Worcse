@@ -36,8 +36,8 @@ const Login = () => {
   }, [currentUser]);
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-black flex-col">
-      <h1 className="text-5xl font-bold text-blue-500 mb-9 display-block uppercase">Stream pay</h1>
-      
+      <h1 className="text-5xl font-bold text-blue-500 mb-3 display-block uppercase">Worcse</h1>
+      <h2 className="text-3xl text-blue-500 mb-3 display-block uppercase">SupplyProvider</h2>
       
 
       
