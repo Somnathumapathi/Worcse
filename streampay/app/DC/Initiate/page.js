@@ -60,8 +60,8 @@ const initiate = () => {
         <div>
             <h1 className='text-center text-3xl uppercase p-4'>Initiate a New Project</h1>
             <div>
+                <div>    Enter project details: </div>
                 <form onSubmit={handleAddProject}>
-                    Enter project details: <br />
                     <input type="text" name="projectName" placeholder='Project Name' value={name} onChange={(e) => setName(e.target.value)} className='p-2 px-4 m-4 rounded-lg text-black' /><br />
                     <input type='number' name='projectFund' placeholder='Project Fund' value={fund} onChange={(e) => setFund(e.target.value)} className='p-2 px-4 m-4 rounded-lg text-black' /> <br />
                     <input type='text' name='supplyProviderID' placeholder='Supply Provider ID' value={spId} onChange={(e) => setspId(e.target.value)} className='p-2 px-4 m-4 rounded-lg text-black' /> <br />
