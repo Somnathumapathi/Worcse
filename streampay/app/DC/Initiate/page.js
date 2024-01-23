@@ -2,8 +2,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Project from '../../../models/project'
-import { db } from '@/firebase';
+import { db, auth } from '@/firebase';
 import { collection, getDoc, addDoc, updateDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { query, where } from "firebase/firestore"
+import { onAuthStateChanged } from 'firebase/auth';
+
 
 const initiate = () => {
     // const [items, setItems] = useState([]);
@@ -20,13 +24,21 @@ const initiate = () => {
     const [projId, setProjID] = useState('');
     const [name, setName] = useState('');
     const [completionStatus, setCompletionStatus] = useState('pending');
+    const [currentUser, setCurrentUser] = useState(null)
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user);
+        });
+
+        return () => unsub();
+    }, []);
 
     const handleAddProject = async (e) => {
         e.preventDefault();
         try {
             if (name != '' && fund != 0 && spId != '') {
                 // const itemNames = selectedItems.map(item => (item.name))
-                const newProject = new Project(name, projId, spId, dcId, completionStatus, fund);
+                const newProject = new Project(name, projId, spId, currentUser.uid, completionStatus, fund);
                 const docRef = await addDoc(collection(db, "projects"), {
                     projectName: newProject.projectName,
                     projectId: newProject.projectId,
@@ -42,10 +54,7 @@ const initiate = () => {
                 };
                 // const projectId = docRef.id();
                 await updateDoc(docRef, updatedData);
-                // setSelectedItems([])
-                // setPhno(0)
-                // setAddress('')
-                // setName('')
+                
                 alert("Project Initiated successfully!")
                 window.location.href = '/DC/dcHomePage';
             } else {
