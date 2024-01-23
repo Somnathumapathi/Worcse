@@ -3,6 +3,7 @@
 import { createWalletClient, custom, createPublicClient, http } from 'viem'
 import { goerli } from 'viem/chains'
 import { parseEther, getAddress, decodeEventLog, parseAbi } from 'viem';
+const worcseContractABI = require('@/blockchain/contract/WorcseContract.json');
 
 let eventUnsubscriberList = [];
 
@@ -87,6 +88,7 @@ class ViemUtils {
         console.log(txdata);
         const contractAddress = txdata.contractAddress;
         console.log(`Contract Deployed to Address: ${contractAddress}`);
+        window.localStorage.setItem(`dep_contract_addr`, contractAddress);
 
         const contract = new ViemContract({
             name: name,
@@ -110,6 +112,15 @@ class ViemContract {
     contractABI = null;
     contractAddress = null;
     initialized = false;
+
+    static fromAddress(addr) {
+        ViemUtils.registerWalletClient(window);
+        return new ViemContract({
+            name: 'Worcse',
+            abi: worcseContractABI.abi,
+            address: addr,
+        })
+    }
 
     constructor({ name, abi, address }) {
         if (!ViemUtils.initialized) throw new Error('ViemUtils uninitialized!');
