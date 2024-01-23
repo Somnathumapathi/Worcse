@@ -5,12 +5,12 @@ import Link from 'next/link'
 import { auth, db } from '@/firebase';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc } from 'firebase/firestore'
-import Company from '../../models/company'
+import SupplyProvider from '../../models/supplyProvider'
 
 const RegisterPage = () => {
   
   const [email, setEmail] = useState('');
-  const [companyName, setCompanyName] = useState('')
+  const [supplyProviderName, setSupplyProviderName] = useState('')
   const [password, setPassword] = useState('');
   // const [currentUser, setCurrentUser] = useState(null);
 
@@ -30,11 +30,11 @@ const RegisterPage = () => {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       
       
-      const newCompany = new Company(cred.user.uid , companyName, email)
-      await addDoc(collection( db , "company"), {
-        companyId: newCompany.companyId,
-        companyName: newCompany.companyName,
-        companyEmail: newCompany.companyEmail
+      const newSupplyProvider = new SupplyProvider(cred.user.uid , supplyProviderName, email)
+      await addDoc(collection( db , "supplyProvider"), {
+        supplyProviderId: newSupplyProvider.supplyProviderId,
+        supplyProviderName: newSupplyProvider.supplyProviderName,
+        supplyProviderEmail: newSupplyProvider.supplyProviderEmail
       })
 
       console.log('User signed up successfully!');
@@ -55,7 +55,7 @@ const RegisterPage = () => {
 
     return (
       <div className="w-full min-h-screen flex justify-center items-center bg-black flex-col">
-        <h1 className="text-5xl font-bold text-blue-500 mb-9 display-block uppercase">Stream pay</h1>
+        <h1 className="text-5xl font-bold text-blue-500 mb-9 display-block uppercase">Worcse</h1>
         
         
   
@@ -70,13 +70,13 @@ const RegisterPage = () => {
                 type="text"
                 id="name"
                 autoFocus
-                value={companyName}
-onChange={(e)=> setCompanyName(e.target.value)}
+                value={supplyProviderName}
+onChange={(e)=> setSupplyProviderName(e.target.value)}
                 className="relative z-10 border-0 border-b-2 border-blue-500 h-10 bg-transparent text-gray-100 outline-none px-2 peer"
               
               />
               <i className="bg-blue-500 rounded w-full bottom-0 left-0 absolute h-1 -z-10 transition-transform duration-300 origin-bottom transform peer-focus:h-1 peer-placeholder-shown:h-[0.5px]"></i>
-              <label className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-8 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500 peer-focus:scale-75 peer-focus:-translate-y-8">Enter Company Name</label>
+              <label className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-8 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500 peer-focus:scale-75 peer-focus:-translate-y-8">Enter SupplyProvider Name</label>
             </div>
             <div className="relative flex flex-col mb-6">
               <input
