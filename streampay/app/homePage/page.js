@@ -1,14 +1,49 @@
 'use client'
 
-import { useState } from 'react';
-import { auth, storage } from "@/firebase";
+import { useState, useEffect } from 'react';
+import { auth, storage, db } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, getDocs, query, where } from "firebase/firestore"
+import { onAuthStateChanged } from 'firebase/auth';
 
 const HomePage = () => {
+    const [currentUser, setCurrentUser] = useState('');
     const [file, setFile] = useState(null);
+    const [myProjects, setMyProjects] = useState([])
 
-    
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user);
+        });
+
+        return () => unsub();
+    }, []);
+
+    useEffect(() => {
+        if(currentUser) {
+        const fetchProjects = async () => {
+    try{
+        
+            const q = query(collection(db, 'projects'), where('spId', '==', currentUser.uid));
+        const snap = await getDocs(q);
+        const projectsData = snap.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        setMyProjects(projectsData)
+        console.log('Fetched', currentUser.uid)
+        
+       
+        
+    } catch (e) {
+        console.log('Error occured: ', e)
+    }
+        } 
+        fetchProjects()
+    }
+
+    }, [currentUser])
 
       const handleUpload = async () => {
         try {
@@ -45,9 +80,11 @@ const HomePage = () => {
         <div>
             <h1>HomePage</h1>
             <h2>My projects:</h2>
-            <div className="pt-2 transform transition-transform bg-blue-900 rounded-md pl-4 m-4">
+            {myProjects.map((project)=>{
+                <div key={project.id}>
+                    <div className="pt-2 transform transition-transform bg-blue-900 rounded-md pl-4 m-4">
 
-<p className="font-bold font-sans hover:text-blue-500">PROJECT NAME: PROJECTNAME | PROJECT ID: 93649874</p>
+<p className="font-bold font-sans hover:text-blue-500">{project.projectName}</p>
     <div className="text-gray-300 font-semibold font-sans">
     <p className="">DC ID: 753Y629838</p>
     <p>TOTAL FUNDS: 1000</p>
@@ -56,6 +93,8 @@ const HomePage = () => {
     <input type="file" className='pb-3' onChange={(e) => setFile(e.target.files[0])} />
     </div>
 </div>
+                </div>
+            })}
 
             <button onClick={handleLogOut}>Logout</button>
         </div>
