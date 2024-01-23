@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -34,6 +34,7 @@ const Login = () => {
       window.location.href = 'homePage';
     }
   }, [currentUser]);
+ 
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-black flex-col">
       <h1 className="text-5xl font-bold text-blue-500 mb-3 display-block uppercase">Worcse</h1>
