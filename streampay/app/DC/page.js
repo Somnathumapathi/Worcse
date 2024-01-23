@@ -31,20 +31,20 @@ const MerchantLogin = () => {
   };
   useEffect(() => {
     if (currentUser!=null) {
-      window.location.href = 'merchant';
+      window.location.href = '/DC/dcHomePage';
     }
   }, [currentUser]);
   return (
-    <div className="w-full min-h-screen flex justify-center items-center bg-white flex-col">
-      <h1 className="text-5xl font-bold text-green-500 mb-9 display-block">CRAVE HUB</h1>
-      <p className="text-2xl text-green-500 mb-9 display-block">Merchant Portal</p>   
+    <div className="w-full min-h-screen flex justify-center items-center flex-col">
+      <h1 className="text-5xl font-bold text-blue-500 mb-9 display-block">Worcse</h1>
+      <p className="text-2xl text-blue-500 mb-9 display-block">Demand Creator</p>   
 
       
       
       <div className="absolute inset-1 bg-gray-800 rounded-lg z-10 p-5 relative w-[380px] h-[350px]">
       
         <form onSubmit={handleLogin}>
-          <h2 className="text-2xl font-semibold text-green-500 text-center mb-6">Login</h2>
+          <h2 className="text-2xl font-semibold text-blue-500 text-center mb-6">Login</h2>
           <div className="relative flex flex-col mb-6">
             <input
               type="email"
@@ -53,11 +53,11 @@ const MerchantLogin = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               
-              className="relative z-10 border-0 border-b-2 border-green-500 h-10 bg-transparent text-gray-100 outline-none px-2 peer"
+              className="relative z-10 border-0 border-b-2 border-blue-500 h-10 bg-transparent text-gray-100 outline-none px-2 peer"
              
             />
-            <i className="bg-green-500 rounded w-full bottom-0 left-0 absolute h-1 -z-10 transition-transform duration-300 origin-bottom transform peer-focus:h-1 peer-placeholder-shown:h-[0.5px]"></i>
-            <label className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-8 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-500 text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500 peer-focus:scale-75 peer-focus:-translate-y-8">Enter Email</label>
+            <i className="bg-blue-500 rounded w-full bottom-0 left-0 absolute h-1 -z-10 transition-transform duration-300 origin-bottom transform peer-focus:h-1 peer-placeholder-shown:h-[0.5px]"></i>
+            <label className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-8 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500 peer-focus:scale-75 peer-focus:-translate-y-8">Enter Email</label>
           </div>
 
           <div className="relative flex flex-col mb-6">
@@ -66,16 +66,16 @@ const MerchantLogin = () => {
               id="password"
              value={password}
              onChange={(e) => setPassword(e.target.value)}
-              className="relative z-10 border-0 border-b-2 border-green-500 h-10 bg-transparent text-gray-100 outline-none px-2 peer"
+              className="relative z-10 border-0 border-b-2 border-blue-500 h-10 bg-transparent text-gray-100 outline-none px-2 peer"
               
             />
-            <i className="bg-green-500 rounded w-full bottom-0 left-0 absolute h-1 -z-10 transition-transform duration-300 origin-bottom transform peer-focus:h-1 peer-placeholder-shown:h-[0.5px]"></i>
-            <label className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-8 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-500 text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500 peer-focus:scale-75 peer-focus:-translate-y-8">Enter Password</label>
+            <i className="bg-blue-500 rounded w-full bottom-0 left-0 absolute h-1 -z-10 transition-transform duration-300 origin-bottom transform peer-focus:h-1 peer-placeholder-shown:h-[0.5px]"></i>
+            <label className="peer-focus:font-medium absolute text-sm duration-300 transform -translate-y-8 scale-75 top-3 left-0 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-500 text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-gray-500 peer-focus:scale-75 peer-focus:-translate-y-8">Enter Password</label>
           </div>
 
           <button
             type="submit"
-            className="py-3 text-gray-100 bg-green-700 w-full rounded hover:bg-green-500 hover:scale-105 duration-300"
+            className="py-3 text-gray-100 bg-blue-700 w-full rounded hover:bg-blue-500 hover:scale-105 duration-300"
             
           >
             Login
@@ -83,11 +83,11 @@ const MerchantLogin = () => {
         </form>
 
         <p className="mt-4 text-gray-600">
-          New Employee?{' '}
-              <Link href='/merchantRegister' className="text-green-500">Register</Link>
+          New Demand Creator?{' '}
+              <Link href='/DC/dcRegisterPage' className="text-blue-500">Register</Link>
         </p>
-        <Link href="/" className='text-sm text-green-700'>
-      Are you Customer?</Link>
+        <Link href="/" className='text-sm text-blue-700'>
+      Are you SupplyProvider?</Link>
       </div>
       
     

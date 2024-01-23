@@ -87,6 +87,8 @@ const Login = () => {
           Don't have an account?{' '}     
               <Link href='/registerPage' className="text-blue-500">Register</Link>
         </p>
+        <Link href="/DC" className='text-sm text-blue-700'>
+      Are you DemandCreator?</Link>
         
       </div>
       
