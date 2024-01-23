@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState('');
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {

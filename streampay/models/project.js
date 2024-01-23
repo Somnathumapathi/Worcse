@@ -1,10 +1,12 @@
 class Project {
-    constructor(projectName, projectId, supplyProviderId, dcId, completeionStatus, funds) {
+    constructor(projectName, projectId, supplyProviderId, dcId, completionStatus, funds, projectFile) {
         this.projectName = projectName
         this.projectId = projectId
         this.supplyProviderId = supplyProviderId
         this.dcId = dcId
-        this.completeionStatus = completeionStatus
+        this.completionStatus = completionStatus
         this.funds = funds
+        this.projectFile = projectFile
     }
 }
+export default Project
