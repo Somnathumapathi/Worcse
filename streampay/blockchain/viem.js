@@ -1,9 +1,11 @@
 "use client";
 
 import { createWalletClient, custom, createPublicClient, http } from 'viem'
-import { goerli } from 'viem/chains'
+import { baseSepolia } from 'viem/chains'
 import { parseEther, getAddress, decodeEventLog, parseAbi } from 'viem';
+import { ganache } from './ganache';
 const worcseContractABI = require('@/blockchain/contract/WorcseContract.json');
+const API_URL = 'https://31a0-117-254-38-136.ngrok-free.app';
 
 let eventUnsubscriberList = [];
 
@@ -12,7 +14,7 @@ class ViemUtils {
     static walletClient = null;
     static publicClient = null;
     static initialized = false;
-    static chain = goerli;
+    static chain = ganache;
 
 
 
@@ -23,7 +25,7 @@ class ViemUtils {
         });
         this.publicClient = createPublicClient({
             chain: this.chain,
-            transport: http()
+            transport: http(API_URL)
         });
         this.initialized = true;
         console.log('walletclient registered with window');

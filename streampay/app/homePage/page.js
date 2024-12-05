@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { auth, storage, db } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, getDocs, query, where } from "firebase/firestore"
+import { collection, getDocs, query, where, updateDoc, doc } from "firebase/firestore"
 import { onAuthStateChanged } from 'firebase/auth';
 import WorcseController from '../playground/controller';
 import { ViemContract } from '@/blockchain/viem';
@@ -52,7 +52,7 @@ const HomePage = () => {
 
   }, [currentUser])
 
-  const handleUpload = async () => {
+  const handleUpload = async (projectId) => {
     try {
       if (file) {
 
@@ -71,7 +71,8 @@ const HomePage = () => {
         const contract = ViemContract.fromAddress(addr);
         console.log(`Instantiated Contract => ${contract}`)
         await WorcseController.performTransfer(contract)
-
+        const projectRef = doc(db, 'projects', projectId); 
+        await updateDoc(projectRef, { completionStatus: 'completed' , work: downloadURL}); 
         setLoading(false);
         alert('Payment Complete');
 
@@ -107,7 +108,7 @@ const HomePage = () => {
                 <p className="">DC ID: {project.projectId}</p>
                 <p>TOTAL FUNDS: {project.funds}</p>
                 <p className="pb-3">ProjectStatus: In progress</p>
-                <button className="absolute bottom-5 right-5 rounded-md bg-slate-500 p-2 hover:bg-white hover:scale-103 duration-300" onClick={handleUpload}>Upload</button>
+                <button className="absolute bottom-5 right-5 rounded-md bg-slate-500 p-2 hover:bg-white hover:scale-103 duration-300" onClick={() => handleUpload(project.projectId)}>Upload</button>
                 <input type="file" className='pb-3' onChange={(e) => setFile(e.target.files[0])} />
               </div>
             </div>
