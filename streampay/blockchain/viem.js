@@ -5,7 +5,7 @@ import { baseSepolia } from 'viem/chains'
 import { parseEther, getAddress, decodeEventLog, parseAbi } from 'viem';
 import { ganache } from './ganache';
 const worcseContractABI = require('@/blockchain/contract/WorcseContract.json');
-const API_URL = 'https://31a0-117-254-38-136.ngrok-free.app';
+const API_URL = 'https://ebb4-2401-4900-61cf-1609-9109-c0a6-23ee-865f.ngrok-free.app';
 
 let eventUnsubscriberList = [];
 
