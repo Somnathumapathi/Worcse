@@ -137,9 +137,24 @@ const HomePage = () => {
         console.log(`Instantiated Contract => ${contract}`)
         await WorcseController.performTransfer(contract)
         const projectRef = doc(db, 'projects', projectId); 
-        await updateDoc(projectRef, { completionStatus: 'completed' , work: downloadURL}); 
+        await updateDoc(projectRef, { 
+          completionStatus: 'completed',
+          work: downloadURL,
+          uploadedAt: new Date().toISOString(),
+          fileName: file.name
+        }); 
         setLoading(false);
         alert('Payment Complete');
+
+        // Refresh projects after upload
+        const updatedProject = {
+          ...myProjects.find(p => p.id === projectId),
+          completionStatus: 'completed',
+          work: downloadURL,
+          uploadedAt: new Date().toISOString(),
+          fileName: file.name
+        };
+        setMyProjects(prev => prev.map(p => p.id === projectId ? updatedProject : p));
 
         setFile(null);
       } else {
@@ -147,6 +162,8 @@ const HomePage = () => {
       }
     } catch (e) {
       console.error("Error uploading file:", e);
+      setLoading(false);
+      alert('Error uploading file. Please try again.');
     }
   };
 
@@ -204,7 +221,11 @@ const HomePage = () => {
                       </p>
                       <p className="flex items-center">
                         <span className="text-gray-400 mr-2">Status:</span>
-                        <span className="px-2 py-1 bg-yellow-600/20 text-yellow-400 rounded-full text-sm">
+                        <span className={`px-2 py-1 rounded-full text-sm ${
+                          project.completionStatus === 'completed' 
+                            ? 'bg-green-600/20 text-green-400'
+                            : 'bg-yellow-600/20 text-yellow-400'
+                        }`}>
                           {project.completionStatus || 'In Progress'}
                         </span>
                       </p>
@@ -212,10 +233,33 @@ const HomePage = () => {
                         <span className="text-gray-400 mr-2">Your Role:</span>
                         <span className="text-blue-400">{project.userRole}</span>
                       </p>
+                      {project.work && (
+                        <div className="mt-4 p-3 bg-gray-700/50 rounded-lg">
+                          <p className="text-gray-400 mb-2">Uploaded Work:</p>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-300 truncate">
+                              {project.fileName || 'Work File'}
+                            </span>
+                            <a 
+                              href={project.work} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-blue-400 hover:text-blue-300 text-sm"
+                            >
+                              View Work
+                            </a>
+                          </div>
+                          {project.uploadedAt && (
+                            <p className="text-xs text-gray-500 mt-1">
+                              Uploaded: {new Date(project.uploadedAt).toLocaleString()}
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="pt-4 space-y-4">
-                      {project.userRole === 'Supply Provider' && (
+                      {project.userRole === 'Supply Provider' && project.completionStatus !== 'completed' && (
                         <div className="relative">
                           <input 
                             type="file" 
@@ -232,12 +276,12 @@ const HomePage = () => {
                       )}
                       
                       <div className="flex space-x-4">
-                        {project.userRole === 'Supply Provider' && (
+                        {project.userRole === 'Supply Provider' && project.completionStatus !== 'completed' && (
                           <button 
                             onClick={() => handleUpload(project.projectId)}
-                            disabled={loading}
+                            disabled={loading || !file}
                             className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all duration-200
-                              ${loading 
+                              ${loading || !file
                                 ? 'bg-gray-600 cursor-not-allowed' 
                                 : 'bg-blue-600 hover:bg-blue-700 text-white'
                               }`}
